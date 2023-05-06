@@ -1,11 +1,21 @@
 package practica8;
 
 /**
- * La clase crea un objeto de caja de cartón con dimensiones específicas y una etiqueta, y calcula el
- * cantidad de cartón utilizado.
+ * Clase para realizar la práctica 8 del curso de Estructura de Datos y Algoritmos
+ * Esta clase implementa un programa que recibe por línea de comandos un archivo
+ * de texto, lo lee y cuenta el número de palabras diferentes que contiene.
+ * 
+ * @author Kimberly
+ * 
  */
 public class Practica8 {
-
+    /**
+     * Método principal que se encarga de recibir el archivo, leerlo, 
+     * almacenar el número de palabras diferentes que contiene y mostrarlo por pantalla
+     * 
+     * @param args argumentos de la línea de comandos, se espera que el primer argumento sea
+     *             el nombre del archivo a leer
+     */
 	public static void main(String[] args) {
 		CajaCarton cajaCarton = new CajaCarton(15, 25, 35);
 		cajaCarton.setEtiqueta("de contenido delicado");
@@ -16,20 +26,49 @@ public class Practica8 {
 }
 
 /**
- * La clase "Caja" representa una caja con dimensiones y una etiqueta, y puede calcular su volumen en
- * ya sean centímetros o metros.
+ * La clase Caja representa una caja de cualquier material, con un ancho, alto y fondo dados en una unidad determinada (centímetros o metros).
  */
 class Caja {
+	
+	/**
+	 * La enumeración Unidad representa las posibles unidades en que se pueden medir las dimensiones de la caja (centímetros o metros).
+	 */
 	enum Unidad {
 		CM, M;
 	}
 	
+	/**
+	 * El ancho de la caja.
+	 */
     int ancho;
+    
+    /**
+	 * El alto de la caja.
+	 */
     int alto;
+    
+    /**
+	 * El fondo de la caja.
+	 */
     int fondo;
+    
+    /**
+	 * La unidad en que se miden las dimensiones de la caja.
+	 */
     Unidad unidad;
+    
+    /**
+	 * La etiqueta de la caja, que identifica su contenido.
+	 */
     String etiqueta;
 
+    /**
+	 * Constructor de la clase Caja.
+	 * @param ancho el ancho de la caja
+	 * @param alto el alto de la caja
+	 * @param fondo el fondo de la caja
+	 * @param unidad la unidad en que se miden las dimensiones de la caja
+	 */
     public Caja(int ancho, int alto, int fondo, Unidad unidad) {
         this.ancho = ancho;
         this.alto = alto;
@@ -38,13 +77,10 @@ class Caja {
         this.etiqueta = "";
     }
 
-/**
- * La función calcula el volumen de un objeto y lo convierte a metros cúbicos si la unidad está en
- * centímetros.
- * 
- * @return El método `getVolumen()` devuelve el volumen calculado de un objeto en metros cúbicos. Si el
- * unidad de medida es en centímetros, convierte el volumen a metros cúbicos antes de devolverlo.
- */
+    /**
+	 * Devuelve el volumen de la caja en metros cúbicos.
+	 * @return el volumen de la caja en metros cúbicos
+	 */
     public double getVolumen() {
         double volumen = ancho * alto * fondo;
         if (unidad == Unidad.CM) {
@@ -53,12 +89,10 @@ class Caja {
         return volumen;
     }
 
-/**
- * Esta función establece una etiqueta para un objeto, pero si la etiqueta tiene más de 30 caracteres,
- * lo trunca a 30 caracteres.
- * 
- * @param etiqueta un parámetro de cadena que representa la etiqueta que se establecerá para un objeto.
- */
+    /**
+	 * Establece la etiqueta de la caja, limitando su longitud a 30 caracteres.
+	 * @param etiqueta la etiqueta a establecer
+	 */
     public void setEtiqueta(String etiqueta) {
         if (etiqueta.length() > 30) {
             this.etiqueta = etiqueta.substring(0, 30);
@@ -67,12 +101,10 @@ class Caja {
         }
     }
 
-/**
- * La función devuelve una representación de cadena de un objeto de cuadro con sus dimensiones, unidad y etiqueta.
- * 
- * @return Una representación de cadena de un objeto de caja, incluidas sus dimensiones (ancho, alto, profundidad) en
- * ya sea centímetros o metros, y su etiqueta.
- */
+    /**
+	 * Devuelve una cadena que representa la información de la caja.
+	 * @return una cadena que representa la información de la caja
+	 */
     public String toString() {
         String unidadStr = unidad == Unidad.CM ? "cm" : "m";
         return "Caja de " + ancho + "x" + alto + "x" + fondo + " " + unidadStr + " con etiqueta " + etiqueta;
@@ -80,38 +112,40 @@ class Caja {
 }
 
 /**
- * La clase CajaCartón extiende Caja y calcula el área de superficie de una caja de cartón a partir de su
- * dimensiones y volumen.
+ * Clase que representa una caja de cartón.
  */
 class CajaCarton extends Caja {
-    private double superficieCarton;
+    private double superficieCarton;   // Superficie de cartón utilizada para la caja de cartón.
 
+    /**
+     * Constructor de la clase CajaCarton.
+     * @param ancho El ancho de la caja de cartón.
+     * @param alto El alto de la caja de cartón.
+     * @param fondo El fondo de la caja de cartón.
+     */
     public CajaCarton(int ancho, int alto, int fondo) {
-        super(ancho, alto, fondo, Unidad.CM);
-        double volumen = super.getVolumen();
-        double volumenCarton = volumen * 0.8;
-        double superficie = (2 * ancho * alto) + (2 * alto * fondo) + (2 * ancho * fondo);
-        this.superficieCarton = superficie * volumenCarton;
-    }
+		super(ancho, alto, fondo, Unidad.CM);
+		double volumen = super.getVolumen();
+		double volumenCarton = volumen * 0.8;
+		double superficie = (2 * ancho * alto) + (2 * alto * fondo) + (2 * ancho * fondo);
+		this.superficieCarton = superficie * volumenCarton;
+	}
+	
+		/**
+	 * Obtiene la superficie de cartón utilizada para construir la caja.
+	 * @return La superficie de cartón utilizada en cm².
+	 */
+	public double getSuperficieCarton() {
+		return superficieCarton;
+	}
 
-/**
- * Esta función devuelve el valor de la variable "superficieCarton" de tipo doble.
- * 
- * @return El método `getSuperficieCarton()` devuelve un valor `doble` que representa el
- * superficie de una caja de cartón.
- */
-    public double getSuperficieCarton() {
-        return superficieCarton;
-    }
-
-/**
- * Esta función devuelve una representación de cadena de un objeto de caja de cartón con sus dimensiones y
- * etiqueta.
- * 
- * @return Una representación en cuerda de una caja de cartón con sus dimensiones y etiqueta.
- */
-    @Override
-    public String toString() {
-        return "Caja de cartón de " + super.ancho + "x" + super.alto + "x" + super.fondo + " cm con etiqueta " + super.etiqueta;
-    }
+	/**
+	 * Genera una cadena de texto con información detallada sobre la caja de cartón.
+	 * @return La cadena de texto generada.
+	 */
+	@Override
+	public String toString() {
+		String unidadStr = unidad == Unidad.CM ? "cm" : "m";
+		return "Caja de cartón de " + ancho + "x" + alto + "x" + fondo + " " + unidadStr + " con etiqueta " + etiqueta;
+	}
 }
